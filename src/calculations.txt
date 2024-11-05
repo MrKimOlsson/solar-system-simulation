@@ -1,0 +1,51 @@
+Scale calculation note.
+
+The real Sun is 1,391,000km in diameter / 2 = 695500 km. 
+If we shrink the sun to 5vw. Then 1vw = 278,200 km.
+Our simulated sun is 5vw so 2.5vw is = 695500 km.
+1vw = 278,200 kilometers.
+
+Average distances of the planets from the Sun:
+Mercury: 57.91 million km
+Venus: 108.94 million km
+Earth: 149.6 million km
+Mars: 227.9 million km
+Jupiter: 778.6 million km
+Saturn: 1,434 million km
+Uranus: 2,871 million km
+Neptune: 4,495 million km
+
+distance + 695500 / 278,200 = distance from center of the sun in vw (if the sun is 5x5vw)
+
+Summary:
+(if the sun is 5x5vw)
+
+Distances in vw (1X)
+Mercury: ~210.66 vw
+Venus: ~394.09 vw
+Earth: ~540.24 vw
+Mars: ~821.69 vw
+Jupiter: ~2801.21 vw
+Saturn: ~5157.07 vw
+Uranus: ~10322.41 vw
+Neptune: ~16159.94 vw
+
+Distances in vw (Divided by 20)
+Mercury: ~10.53 vw
+Venus: ~19.70 vw
+Earth: ~27.01 vw
+Mars: ~41.08 vw
+Jupiter: ~140.06 vw
+Saturn: ~257.85 vw
+Uranus: ~516.12 vw
+Neptune: ~808.00 vw
+
+Distances in vw (Divided by 40)
+  Mercury: 5.265,
+  Venus: 9.86,
+  Earth: 13.505,
+  Mars: 20.54,
+  Jupiter: 70.03,
+  Saturn: 128.925,
+  Uranus: 258.06,
+  Neptune: 404,

@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Major+Mono+Display&family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Major+Mono+Display&family=MuseoModerno:ital,wght@0,100..900;1,100..900&family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General styles for the app */
+body {
+  /* background-image: url('./assets/bg3.jpg'); */
+  background-color: black;
+  background-size: cover; /* Ensures the image covers the whole body */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  color: white; /* Change text color for better visibility */
+  font-family: "Jura", sans-serif;
+  letter-spacing: .1rem;
+  // font-family: "MuseoModerno", sans-serif;
+  
+}
+
+/* styles/globals.css */
+@font-face {
+  font-family: 'nasalization-rg';
+  src: url('/solar-system/public/fonts/nasalization-rg.otf') format('otf');
+       /* url('/fonts/MyFont.woff') format('woff'),
+       url('/fonts/MyFont.ttf') format('truetype'); */
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.app {
+  height: 100%;
+  text-align: center;
+  color: white;
+  padding: 0rem;
+  position: relative; /* Set position for the sun */
+  overflow: hidden; /* Prevent overflow from .app itself */
+  transition: height 0.5s ease; /* Smooth transition */
+  padding: 0rem 0 0 0;
+}
+
+p {
+  letter-spacing: .1rem;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  letter-spacing: .1rem;
+
+}
+
+li {
+  margin: 5px 0;
+}

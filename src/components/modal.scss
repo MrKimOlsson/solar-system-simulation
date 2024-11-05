@@ -1,0 +1,38 @@
+/* src/Modal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75); /* Semi-transparent background */
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    z-index: 1000; /* Ensure it appears above other content */
+  }
+  
+  .modal-content {
+    background: white; /* White background for modal */
+    color: #000;
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Space inside modal */
+    width: 300px; /* Width of modal */
+    max-width: 90%; /* Responsive */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  }
+  
+  .close-button {
+    margin-top: 10px; /* Space above button */
+    padding: 5px 10px; /* Button padding */
+    border: none; /* No border */
+    background-color: #007BFF; /* Button color */
+    color: white; /* Text color */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  .close-button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+  }
+  
