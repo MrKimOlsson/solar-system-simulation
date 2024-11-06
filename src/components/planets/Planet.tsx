@@ -1,25 +1,24 @@
 import React from 'react';
-import '../styles.scss';
+import '../../styles.scss';
 
 // Importy planet images
-import mercuryImage from '../assets/mercury.png';
-import venusImage from '../assets/venus.png';
-import earthImage from '../assets/earth.png';
-import marsImage from '../assets/mars.png';
-import jupiterImage from '../assets/jupiter.png';
-import saturnImage from '../assets/saturn.png';
-import uranusImage from '../assets/uranus.png';
-import neptuneImage from '../assets/neptune.png';
-import sunImage from '../assets/sun.png';
+import mercuryImage from '../../assets/mercury.png';
+import venusImage from '../../assets/venus.png';
+import earthImage from '../../assets/earth.png';
+import marsImage from '../../assets/mars.png';
+import jupiterImage from '../../assets/jupiter.png';
+import saturnImage from '../../assets/saturn.png';
+import uranusImage from '../../assets/uranus.png';
+import neptuneImage from '../../assets/neptune.png';
+import sunImage from '../../assets/sun.png';
 
 interface PlanetProps {
   planet: {
     englishName: string;
-    meanRadius?: number; // Make meanRadius optional
+    meanRadius?: number;
     imageUrl?: string;
     sunScale: number;
   };
-  onClick: () => void;
 }
 
 // Planet images
@@ -54,14 +53,14 @@ const SUN_SCALE = 5;
 // Export the constants
 export { planetDiameters, SUN_SCALE };
 
-const Planet: React.FC<PlanetProps> = ({ planet, onClick }) => {
+const Planet: React.FC<PlanetProps> = ({ planet }) => {
   const imageUrl = planetImages[planet.englishName] || '';
 
   // Calculate the planet size based on the mean radius of the planet converted to vw and the scale factor of our sun
   const size = ((planet.meanRadius || 0) / planetDiameters['Sun']) * SUN_SCALE * planet.sunScale;
 
   return (
-    <div className="planet-container" onClick={onClick}>
+    <div className="planet-container">
       <div
         className={`planet ${planet.englishName.toLowerCase()}`} // Assign class based on planet name
         style={{

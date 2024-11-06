@@ -6,6 +6,7 @@
   font-weight: 100;
   color: white;
   font-family: "MuseoModerno", sans-serif;
+  display: none;
 }
 
 //_________________________________________________________________________Planet list_________________________________________________________________________
@@ -25,170 +26,26 @@
   }
 }
 
-.UI-scroll-left {
-  writing-mode: vertical-rl;
-  position: absolute;
-  left: 0rem;
-  top: 55vh;
-  opacity: .3;
-}
-
-.UI-scroll-right {
-  writing-mode: vertical-rl;
-  position: absolute;
-  right: 0rem;
-  top: 55vh;
-  opacity: .3;
-}
-
-//_________________________________________________________________________Size and Scale buttons_________________________________________________________________________
-
-.size-controls {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 13000;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  margin: .9rem 10px;
-
-  p {
-    font-size: 1rem;
-    font-weight: 900;
-  }
-
-  .distance-control-title {
-    margin: 1rem 0 0 0;
-    font-size: 1rem;
-    font-weight: 900;
-  }
-
-  .distance-size-title {
-    font-size: 1rem;
-    font-weight: 900;
-  }
-
-}
-
-.size-controls button {
-  margin: 0 10px;
-  padding: 5px 10px;
-  width: 90px;
-  background-color: #23005c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: .9rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #350288;
-  }
-}
-
-.scale-interface {
-  position: fixed;
-  bottom: 1rem;
-  width: 100vw;
-  font-size: 1rem;
-  letter-spacing: .1rem;
-}
-
-// Current planet distance
-.current-distance {
-  position: absolute;
-  bottom: 0;
-  left: 1rem;
-  font-weight: 900;
-  
-  span {
-    font-weight: 100;
-  }
-}
-
-// Current planet scale
-.current-scale {
-  position: absolute;
-  bottom: 0;
-  right: 2.5rem;
-  font-weight: 900;
-
-  span {
-    font-weight: 100;
-  }
-}
-
-//_________________________________________________________________________User messages_________________________________________________________________________
-
-// Planet loading text
-.loading {
-  font-size: 1.5em;
-  color: #fff;
-  text-align: center;
-  margin: 20px 0;
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-// Scroll message
-.scroll-message {
-  position: fixed;
-  bottom: 50vh;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  z-index: 1000;
-  font-size: 1.5rem;
-}
-
-// Scroll end message
-.end-message {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  color: white; /* Ensure it's visible */
-}
-
-// Scroll end sub-message
-.sub-message {
-  font-size: 1rem;
-  opacity: .5;
-}
-
-//_________________________________________________________________________Planet spin_________________________________________________________________________
-
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-
+//#######################################################################  Solar System  #######################################################################
 
 //_________________________________________________________________________Orbits_________________________________________________________________________
 
-.planet-label {
-  font-size: .9rem;
-  color: white;
-  opacity: .5;
-}
-                      
 
 
 .orbit-container {
   position: relative;
   transform: translateY(-50%);
 }
+
+.orbit-path {
+  position: absolute;
+  border: 1px dashed #cccccc2c;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+//_________________________________________________________________________Planet Orbit Label_________________________________________________________________________
+
 
 .label-container {
   position: absolute;
@@ -201,43 +58,13 @@
 }
 
 .planet-label {
+  font-size: .9rem;
+  color: white;
+  opacity: .5;
   margin-bottom: 1rem;
 }
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100%;
-}
-
-
-//________________________________________________________Orbits__________________________________________________________
-
-@keyframes orbit {
-  from {
-    transform: rotate(0deg) translate(0) rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg) translate(0) rotate(0deg);
-  }
-}
-
-
-.orbit-path {
-  position: absolute;
-  border: 1px dashed #cccccc2c;
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.planet-container {
-  position: relative;
-  top: 0;
-  left: 0;
-  transform-origin: 0 0; 
-}
+                      
+//_________________________________________________________________________Planets_________________________________________________________________________
 
 // Planet names
 .planet-name {
@@ -248,30 +75,36 @@
   left: 1rem;
 }
 
+.planet-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0; 
+}
+
 .sun {
   position: absolute;
-  width: 50px; /* Size of the planet */
-  height: 50px; /* Size of the planet */
-  border-radius: 50%; /* Make it circular */
-  top: calc(50% - 2.45vw); /* Center vertically (50% - half of the planet's height) */
-  left: calc(50% - 2.45vw); /* Center horizontally (50% - half of the planet's width) */
-  transform-origin: 50% 50%; /* Set the transform origin to the center */
-  animation: spin reverse 0.74s linear infinite; /* Spin animation */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: calc(50% - 2.45vw);
+  left: calc(50% - 2.45vw);
+  transform-origin: 50% 50%;
+  animation: spin reverse 0.74s linear infinite;
   width: 5vw;
   height: 5vw;
   background-image: url('../src/assets/sun.png'); 
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 50%;
-  z-index: 20;
+  z-index: 21;
 }
 
-
 .planet {
-    border-radius: 50%; // Makes the planets circular
+    border-radius: 50%;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Starting shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     transition: box-shadow 0.1s ease;
 
 
@@ -324,6 +157,21 @@
   }
 }
 
+
+//________________________________________________________  Orbit Animation  __________________________________________________________
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg) translate(0) rotate(0deg);
+  }
+}
+
+//________________________________________________________  Planet Spin Animation  ________________________________________________________
+
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -333,78 +181,22 @@
   }
 }
 
-//_________________________________________________________________________Modal_________________________________________________________________________
-
-.planet-modal {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  background-color: white;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  width: 200px;
-  max-height: 150px;
-  overflow: hidden;
-}
-
-.modal-image {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-}
-
 
 //_________________________________________________________________________Media Queries_________________________________________________________________________
 
 
 /* Tablet styles (for screens up to 1024px wide) */
 @media (max-width: 1024px) {
-  .siteTitle {
-    font-size: 1.9rem;
-  }
-
-  .size-controls {
-
-    margin: .4rem 0 0 0;
-    
-    p {
-      font-size: .8rem;
-      font-weight: 900;    }
-  
-    .distance-control-title {
-      margin: .8rem 0 0 0;
-      font-size: 1rem;
-      font-weight: 900;
-    }
-
-    .distance-size-title {
-      font-size: 1rem;
-      font-weight: 900;
-    }
-  
-  }
+ 
 
   .planet-list {
     margin: .4rem .6rem;
     font-size: .8rem;
+    width: 50%;
 
     li {
       margin: .7rem 0;
     }
-  }
-
-  .size-controls button {
-    font-size: .8rem;
   }
 
   .planet-label {
@@ -414,24 +206,7 @@
 
 /* Mobile styles (for screens up to 768px wide) */
 @media (max-width: 768px) {
-  .siteTitle {
-    font-size: 1.2rem;
-  }
-
-  .size-controls {
-
-    margin: .4rem 0 0 0;
-    
-    p {
-      font-size: .8rem;
-      font-weight: 900;    }
-  
-    .distance-control-title {
-      margin: .8rem 0 0 0;
-    }
-  
-  }
-
+ 
   .planet-list {
     margin: .4rem .6rem;
     font-size: .8rem;
@@ -441,22 +216,7 @@
     }
   }
 
-  .size-controls button {
-    font-size: .8rem;
-  }
-
   .planet-label {
     font-size: .7rem;
   }
 }
-
-/* Small tablets or large mobile devices (for screens up to 600px wide) */
-@media (max-width: 600px) {
-
-}
-
-/* Small mobile devices (for screens up to 480px wide) */
-@media (max-width: 480px) {
-
-}
-

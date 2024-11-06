@@ -17,7 +17,7 @@ const YearCounter: React.FC = () => {
 
   return (
     <div className="year-counter">
-      <p>Years Passed: <span>{yearsPassed}</span></p>
+      <p>Year count: <span>{yearsPassed}</span></p>
     </div>
   );
 };
