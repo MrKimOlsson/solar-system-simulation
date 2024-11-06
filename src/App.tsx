@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import Planet from './components/Planet';
-import Modal from './components/Modal';
+import Planet from './components/planets/Planet';
 import { fetchPlanets } from './services/planetService';
 import './App.scss';
 import './styles.scss';
-import Starfield from './components/Starfield';
-import NebulaBackground from './components/NebulaBackground';
-import YearCounter from './components/counter/YearCounter';
+import Starfield from './components/background/Starfield';
+import NebulaBackground from './components/background/NebulaBackground';
+import UI from './components/ui/UI'
 
+{/* ######################################################  Interface  ######################################################*/}
 
 interface PlanetData {
   id: number;
@@ -25,9 +25,10 @@ interface PlanetOffsets {
 }
 
 const App: React.FC = () => {
+
+{/* ######################################################  useStates  ######################################################*/}
+
   const [planets, setPlanets] = useState<PlanetData[]>([]);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [selectedPlanet, setSelectedPlanet] = useState<PlanetData | null>(null);
   const [nasaImages, setNasaImages] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(true);
   const [sunScale, setSunScale] = useState(1);
@@ -37,7 +38,7 @@ const App: React.FC = () => {
   const [visiblePlanets, setVisiblePlanets] = useState(['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune']);
   const [currentDistance, setCurrentDistance] = useState('/20');
   const [distanceScale, setDistanceScale] = useState(40); // 1 = 1X, 20 = 20X, 40 = 40X
-  const [orbitContainerTop, setOrbitContainerTop] = useState('45vh'); // Default value
+  const [orbitContainerTop, setOrbitContainerTop] = useState('50vh'); // Default value - Might have to change on different scales (but not used at the moment)
 
 
 {/* ######################################################  Fetch planet images  ######################################################*/}
@@ -47,16 +48,17 @@ const App: React.FC = () => {
   useEffect(() => {
     const loadPlanets = async () => {
       try {
+        // Fetch nr 1 - Fetch the planets of the solar system
         const planetsData = await fetchPlanets();
         const imagesMap: { [key: string]: string } = {};
 
+        // Fetch 2-9 - Fetch images for each planet
         for (const planet of planetsData) {
           const imageResponse = await fetch(`https://images-api.nasa.gov/search?q=${planet.englishName}`);
           const imageData = await imageResponse.json();
           const imageUrl = imageData.collection.items[0]?.links[0]?.href;
           imagesMap[planet.englishName] = imageUrl || '';
         }
-
 
         // Sort planets
         const correctOrder = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
@@ -76,31 +78,22 @@ const App: React.FC = () => {
     loadPlanets();
   }, []);
 
-  // Modal control
-  const openModal = (planet: PlanetData) => {
-    setSelectedPlanet(planet);
-    setIsOpen(true);
-  };
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setSelectedPlanet(null);
-  };
-
-  
   
   {/* ######################################################  PLANET/ORBIT DISTANCES AND SIZE  ######################################################*/}
   
   // FOR CALCULATION, SEE "root-folder/calculations.txt"
   
-
+  {/* ------------------------------------------------------  Sun Size and Scale  ------------------------------------------------------*/}
+  
   // The suns scale will determine the scale of the planets, since the planets size are relative to the sun´s size.
   const toggleScale = () => {
-    setSunScale(prev => (prev === 1 ? 100 : 1)); // Toggle between 1X and 20X.
+    setSunScale(prev => (prev === 1 ? 100 : 1  )); // Toggle between 1X and 100X.
   };
 
   const sunSize = 5; // Sun size in vw
 
+{/* ------------------------------------------------------  Unscaled Orbit Distaces  ------------------------------------------------------*/}
 
 // Control unscaled orbit distance from the sun
 // Actual orbit distance relative to the sun's size converted to vw format
@@ -112,6 +105,7 @@ const planetOrbitsActual: { [key: string]: number } = {
   Mars: 821.69,
 };
 
+{/* ------------------------------------------------------  Unscaled Planet Distaces  ------------------------------------------------------*/}
 // Control unscaled planet distace from the sun
 // Offsets for actual distances
 // Outer planets removed since they are to far away to scroll to at this scale.
@@ -122,9 +116,7 @@ const actualPlanetDistances: PlanetOffsets = {
   Mars: { x: 821.69, y: 0 },
 };
 
-// __________________________ / 20 __________________________________
-
-
+{/* ------------------------------------------------------  Scale /20 Orbit Distace  ------------------------------------------------------*/}
 // // Orbit distance: Divided by 20
 const orbitsDistanceDividedBy20: { [key: string]: number } = {
   Mercury: 10.53,
@@ -137,6 +129,7 @@ const orbitsDistanceDividedBy20: { [key: string]: number } = {
   Neptune: 808.00,
 };
 
+{/* ------------------------------------------------------  Scale /20 Planet Distace  ------------------------------------------------------*/}
 // // Planet distance: Divided by 20
 const planetDistanceDividedBy20: PlanetOffsets = {
   Mercury: { x: 10.53, y: 0 },
@@ -149,9 +142,7 @@ const planetDistanceDividedBy20: PlanetOffsets = {
   Neptune: { x: 808.00, y: -1 },
 };
 
-// ____________________________ / 40 ________________________________
-
-
+{/* ------------------------------------------------------  Scale /40 Orbit Distace  ------------------------------------------------------*/}
 // // Orbit distance: Divided by 40
 const orbitDistanceDividedBy40: { [key: string]: number } = {
   Mercury: 5.265,
@@ -164,6 +155,7 @@ const orbitDistanceDividedBy40: { [key: string]: number } = {
   Neptune: 404,
 };
 
+{/* ------------------------------------------------------  Scale /40 Planet Distace  ------------------------------------------------------*/}
 // // Planet distance: Divided by 40
 const planetDistanceDividedBy40: PlanetOffsets = {
   Mercury: { x: 5.265, y: 0 },
@@ -176,10 +168,9 @@ const planetDistanceDividedBy40: PlanetOffsets = {
   Neptune: { x: 404, y: -1 },
 };
 
-// ____________________________________________________________
 
+{/* ######################################################  Control Orbit times  ######################################################*/}
 
-// &&&&&&&&&&&&&&&&&  ORBIT TIME  &&&&&&&&&&&&&&&&&
   // Relative planet orbit times in seconds. 10sek = 1 year
   const planetOrbitalPeriods: { [key: string]: number } = {
     Mercury: 3.33,
@@ -192,7 +183,9 @@ const planetDistanceDividedBy40: PlanetOffsets = {
     Neptune: 1648,
   };
 
-// &&&&&&&&&&&&&&&&&  Chaning distance with UI buttons  &&&&&&&&&&&&&&&&&
+
+{/* ######################################################  Chaning distance with UI buttons  ######################################################*/}
+
 // Planet distance
   const getOffset = (planetName: string) => {
     if (distanceScale === 1) {
@@ -217,47 +210,51 @@ const planetDistanceDividedBy40: PlanetOffsets = {
     return 0;
   };
   
- 
-  // Control / Set distance scales settings
+
+{/* ######################################################  Control distance scales settings  ######################################################*/}
+
+{/* ------------------------------------------------------  Scale 1X  ------------------------------------------------------*/}
+
   const setDistanceScale1x = () => {
     setDistanceScale(1);
-    // setAppHeight('500vw');
     setAppHeight('1800vh');
     setVisiblePlanets(['mercury', 'venus', 'earth', 'mars']);
     setShowScrollMessage(true);
     setShowEndMessage(true);
     setCurrentDistance('1X');
-    setOrbitContainerTop('45vh');
+    setOrbitContainerTop('50vh');
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   };
   
+{/* ------------------------------------------------------  Scale /20  ------------------------------------------------------*/}
+
   const setDistanceScaleDividedBy20 = () => {
     setDistanceScale(20);
-    // setAppHeight('850vw');
     setAppHeight('1800vh');
     setVisiblePlanets(['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune']);
     setShowScrollMessage(false);
     setShowEndMessage(false);
     setCurrentDistance('/20');
-    setOrbitContainerTop('45vh');
+    setOrbitContainerTop('50vh');
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   };
   
+{/* ------------------------------------------------------  Scale /40  ------------------------------------------------------*/}
+
   const setDistanceScaleDividedBy40 = () => {
     setDistanceScale(40);
-    // setAppHeight('450vw');
     setAppHeight('940vh');
     setVisiblePlanets(['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune']);
     setShowScrollMessage(false);
     setShowEndMessage(false);
     setCurrentDistance('/40');
-    setOrbitContainerTop('45vh');
+    setOrbitContainerTop('50vh');
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -268,11 +265,15 @@ const planetDistanceDividedBy40: PlanetOffsets = {
 
 
 // Scroll event listener
+// The message will be shown at 1X scale but disapear when scroll starts
+// Another message will show at the bottom
+// To control this see setShowScrollMessage(false); and setShowEndMessage(false); in the section above
+
 useEffect(() => {
     const handleScroll = () => {
       const bottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
       if (bottom) {
-        setShowEndMessage(false);
+        setShowScrollMessage(false); // Make sure message is not visible at the bottom
       } else {
         setShowScrollMessage(false); // Reset message when scrolling down
       }
@@ -286,79 +287,40 @@ useEffect(() => {
 
 
 
-{/* #--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#|  RETURN START  |#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#*/}
-
-
 return (
   <>
+      {/* ########################################################################  Background  #########################################################################*/}
     <div>
       <NebulaBackground />
       <Starfield />
-
     </div>
-    {/* Dynamic app hight for scaling planet distance */}
+
+      {/* ########################################################################  UI INTERFACE  #########################################################################*/}
     <div className="app" style={{ height: appHeight }}>
-      {/* UI - Site Heading */}
-      <h1 className="siteTitle">Solar System Simulation</h1>
-      <YearCounter />
-      {/* UI - Loading planets text */}
-      {loading && <div className="loading">Loading planet data...</div>}
-
-
-
-      {/* ######################################################  USER MESSAGES AT DIFFERENT SCALES  ######################################################*/}
-      {/* UI - Message when actual distances are displayed */}
-      {showScrollMessage && !loading && (
-        <div className="scroll-message">You better start scrolling</div>
-      )}
-
-      {/* UI - Page end message (when the user scrolls to the bottom at "actual planet distance scale") */}
-      {/* Reason for this and dynamic app hight = The page would be 3050vw tall reach all the way to Neptune at actual relative distance to our simulated sun at a diameter of 5vw.*/}
-      {showEndMessage &&(
-        <div className="end-message">
-          <p>
-          The planets are way too far away at this scale
-          </p>
-          <p className='sub-message'>
-          Try a dividing the distance to make the distance short enough to reach
-          </p>
         
-        </div>
-      )}
-
-{/* ########################################################################  UI INTERFACE  #########################################################################*/}
-    
-
-      {/* UI INTERFACE */}
-      {/* User scale controls */}
-      <div className="scale-interface">
-        <p className='current-scale'>planet scale: <span>{sunScale}X</span></p>
-        <p className='current-distance'>planet distance: <span>{currentDistance}</span></p>
-      </div>
-
-      {/* Size control */}
-      <div className="size-controls">
-        <p className='distance-size-title'>Size:</p>
-        <button onClick={toggleScale}>
-          {sunScale === 100 ? "  1X" : "100X"}
-        </button>
-  
-        {/* Distance control */}
-        <p className='distance-control-title'>Distance:</p>
-        <button onClick={setDistanceScale1x}>1X</button>
-        <button onClick={setDistanceScaleDividedBy20}>/20</button>
-        <button onClick={setDistanceScaleDividedBy40}>/40</button>
-      </div>
-
-      <div>
-        <p className='UI-scroll-left'>{`Scroll >>>`}</p>
-        <p className='UI-scroll-right'>{`Scroll >>>`}</p>
-
-      </div>
+        {/* Pass data to UI component */}
+        <UI
+          toggleScale={toggleScale}
+          sunSize={sunSize}
+          currentDistance={currentDistance}
+          distanceScale={distanceScale}
+          setDistanceScale1x={setDistanceScale1x}
+          setDistanceScaleDividedBy20={setDistanceScaleDividedBy20}
+          setDistanceScaleDividedBy40={setDistanceScaleDividedBy40}
+          loading={loading}
+          showScrollMessage={showScrollMessage}
+          showEndMessage={showEndMessage}
+          appHeight={appHeight}
+          sunScale={sunScale}
+          planets={planets}
+          nasaImages={nasaImages}
+        />
 
 
+
+      {/* ########################################################################  SOLAR SYSTEM SIMULATION  #########################################################################*/}
       <div
-        className={`orbit-container ${currentDistance === '1X' ? 'actual-distance' : ''}`}
+        className={`orbit-container`}
         style={{ top: orbitContainerTop }}
       >
         <div
@@ -407,7 +369,7 @@ return (
                             imageUrl: nasaImages[planet.englishName],
                             sunScale,
                           }}
-                          onClick={() => openModal(planet)}
+                          // onClick={() => openModal(planet)}
                         />
                       </div>
                     </div>
@@ -430,65 +392,13 @@ return (
           </div>
         )}
       </div>
-
-
-      {/* Planet list UI */}
-      <div className="planet-list">
-        <h2>Planets</h2>
-        <ul>
-          {planets.map((planet) => (
-            <li key={planet.id} onClick={() => openModal(planet)} style={{ cursor: 'pointer' }}>
-              {planet.englishName}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-        {/* Planet info modal  */}
-        <Modal isOpen={modalIsOpen} onClose={closeModal}>
-        {selectedPlanet && (
-          <>
-            <h2>{selectedPlanet.englishName}</h2>
-            <img 
-              src={nasaImages[selectedPlanet.englishName]} 
-              alt={`${selectedPlanet.englishName} NASA`} 
-              className="modal-image" 
-              />
-            <ul>
-              <li><strong>Average Temperature:</strong> {selectedPlanet.avgTemp ? `${selectedPlanet.avgTemp} °C` : 'N/A'}</li>
-              <li><strong>Density:</strong> {selectedPlanet.density ? `${selectedPlanet.density} g/cm³` : 'N/A'}</li>
-              <li><strong>Discovered By:</strong> {selectedPlanet.discoveredBy || 'Unknown'}</li>
-              <li><strong>Discovery Date:</strong> {selectedPlanet.discoveryDate || 'Unknown'}</li>
-              <li><strong>Diameter:</strong> {selectedPlanet.meanRadius ? `${selectedPlanet.meanRadius * 2} km` : 'N/A'}</li>
-              <li><strong>Moons:</strong> {selectedPlanet.moons?.length || 0} {selectedPlanet.moons?.length === 1 ? 'moon' : 'moons'}</li>
-            </ul>
-          </>
-        )}
-      </Modal>
-
-        {/* Alternative modal */}
-  
-        {/* Planet info modal  */}
-        {/* <Modal isOpen={modalIsOpen} onClose={closeModal}>
-          {selectedPlanet && (
-            <>
-              <h2>{selectedPlanet.englishName}</h2>
-              <img src={nasaImages[selectedPlanet.englishName]} alt={`${selectedPlanet.englishName} NASA`} className="modal-image" />
-              <ul className='planet-list'>
-                <li><strong>Average Temperature:</strong> {selectedPlanet.avgTemp ? `${selectedPlanet.avgTemp} °C` : 'N/A'}</li>
-                <li><strong>Density:</strong> {selectedPlanet.density ? `${selectedPlanet.density} kg/m³` : 'N/A'}</li>
-                <li><strong>Discovered By:</strong> {selectedPlanet.discoveredBy || 'N/A'}</li>
-                <li><strong>Discovery Date:</strong> {selectedPlanet.discoveryDate || 'N/A'}</li>
-                <li><strong>Diameter:</strong> {selectedPlanet.meanRadius ? `${selectedPlanet.meanRadius * 2} km` : 'N/A'}</li>
-                <li><strong>Moons:</strong> {selectedPlanet.moons?.length || 0} {selectedPlanet.moons?.length === 1 ? 'moon' : 'moons'}</li>
-              </ul>
-            </>
-          )}
-        </Modal> */}
     </div>
   </>
 );
 };
 
 export default App;
+
+
+
 

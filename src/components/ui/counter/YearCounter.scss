@@ -1,16 +1,26 @@
 .year-counter {
     position: fixed;
-    bottom: .6rem;
-    right: 13rem;
+    bottom: 0rem;
+    right: 9rem;
     font-size: 1rem;
     color: white;
     padding: 5px;
     font-weight: 900;
     border-radius: 5px;
-    z-index: 99999;
+    z-index: 9;
 
     span {
         font-weight: 100;
     }
   }
-  
+
+
+  @media (max-width: 1024px) {
+
+    .year-counter {
+        font-size: .7rem;
+        right: 6rem;
+        bottom: 0rem;
+
+    }
+  }

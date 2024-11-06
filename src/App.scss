@@ -24,39 +24,27 @@
   box-sizing: border-box;
 }
 
-/* General styles for the app */
+html, body {
+  margin: 0;
+  padding: 0;
+  max-width: 100vw;
+}
+
 body {
-  /* background-image: url('./assets/bg3.jpg'); */
   background-color: black;
-  background-size: cover; /* Ensures the image covers the whole body */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  color: white; /* Change text color for better visibility */
+  color: white;
   font-family: "Jura", sans-serif;
-  letter-spacing: .1rem;
-  // font-family: "MuseoModerno", sans-serif;
-  
+  letter-spacing: .1rem;  
 }
-
-/* styles/globals.css */
-@font-face {
-  font-family: 'nasalization-rg';
-  src: url('/solar-system/public/fonts/nasalization-rg.otf') format('otf');
-       /* url('/fonts/MyFont.woff') format('woff'),
-       url('/fonts/MyFont.ttf') format('truetype'); */
-  font-weight: normal;
-  font-style: normal;
-}
-
 
 .app {
   height: 100%;
   text-align: center;
   color: white;
   padding: 0rem;
-  position: relative; /* Set position for the sun */
-  overflow: hidden; /* Prevent overflow from .app itself */
-  transition: height 0.5s ease; /* Smooth transition */
+  position: relative;
+  overflow: hidden;
+  transition: height 0.5s ease;
   padding: 0rem 0 0 0;
 }
 
@@ -68,7 +56,6 @@ ul {
   list-style-type: none;
   padding: 0;
   letter-spacing: .1rem;
-
 }
 
 li {
